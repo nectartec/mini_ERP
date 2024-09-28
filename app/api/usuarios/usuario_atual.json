@@ -1,0 +1,119 @@
+[
+  {
+    "name": "",
+    "module": "auth",
+    "action": "restrict",
+    "options": {
+      "provider": "auth"
+    }
+  },
+  {
+    "name": "identity",
+    "module": "auth",
+    "action": "identify",
+    "options": {
+      "provider": "auth"
+    },
+    "meta": []
+  },
+  {
+    "name": "query",
+    "module": "dbconnector",
+    "action": "single",
+    "options": {
+      "connection": "db",
+      "sql": {
+        "type": "select",
+        "columns": [
+          {
+            "table": "users",
+            "column": "nome"
+          },
+          {
+            "table": "users",
+            "column": "email"
+          },
+          {
+            "table": "users",
+            "column": "funcao"
+          },
+          {
+            "table": "users",
+            "column": "avatar"
+          },
+          {
+            "table": "users",
+            "column": "empresa"
+          }
+        ],
+        "params": [
+          {
+            "operator": "equal",
+            "type": "expression",
+            "name": ":P1",
+            "value": "{{identity}}",
+            "test": ""
+          }
+        ],
+        "table": {
+          "name": "users"
+        },
+        "primary": "id",
+        "joins": [],
+        "wheres": {
+          "condition": "AND",
+          "rules": [
+            {
+              "id": "users.id",
+              "field": "users.id",
+              "type": "double",
+              "operator": "equal",
+              "value": "{{identity}}",
+              "data": {
+                "table": "users",
+                "column": "id",
+                "type": "number",
+                "columnObj": {
+                  "type": "increments",
+                  "default": "",
+                  "primary": true,
+                  "unique": true,
+                  "nullable": false,
+                  "name": "id"
+                }
+              },
+              "operation": "="
+            }
+          ],
+          "conditional": null,
+          "valid": true
+        },
+        "query": "select \"nome\", \"email\", \"funcao\", \"avatar\", \"empresa\" from \"users\" where \"users\".\"id\" = ?"
+      }
+    },
+    "output": true,
+    "meta": [
+      {
+        "type": "text",
+        "name": "nome"
+      },
+      {
+        "type": "text",
+        "name": "email"
+      },
+      {
+        "type": "text",
+        "name": "funcao"
+      },
+      {
+        "type": "text",
+        "name": "avatar"
+      },
+      {
+        "type": "number",
+        "name": "empresa"
+      }
+    ],
+    "outputType": "object"
+  }
+]

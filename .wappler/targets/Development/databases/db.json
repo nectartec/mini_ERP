@@ -1,0 +1,444 @@
+{
+  "direct": true,
+  "type": "postgres",
+  "connection": {
+    "host": "188.245.125.220",
+    "port": 9906,
+    "user": "db_user",
+    "password": "syrcDSqw",
+    "database": "mini_erp"
+  },
+  "schema": {
+    "schemas": [
+      "public"
+    ],
+    "tables": {
+      "empresa": {
+        "db": {},
+        "columns": {
+          "id": {
+            "db": {
+              "type": "increments",
+              "default": "",
+              "primary": true,
+              "unique": true,
+              "nullable": false
+            }
+          },
+          "empresa": {
+            "db": {
+              "type": "string",
+              "maxLength": 255,
+              "primary": false,
+              "unique": false,
+              "nullable": true
+            }
+          }
+        },
+        "refs": {
+          "clientes": "empresa",
+          "fornecedores": "empresa",
+          "financeiro": "empresa",
+          "users": "empresa"
+        }
+      },
+      "clientes": {
+        "db": {},
+        "columns": {
+          "id": {
+            "db": {
+              "type": "increments",
+              "default": "",
+              "primary": true,
+              "unique": true,
+              "nullable": false
+            }
+          },
+          "nome": {
+            "db": {
+              "type": "string",
+              "maxLength": 255,
+              "primary": false,
+              "unique": false,
+              "nullable": true
+            }
+          },
+          "email": {
+            "db": {
+              "type": "string",
+              "maxLength": 255,
+              "primary": false,
+              "unique": false,
+              "nullable": true
+            }
+          },
+          "whatsapp": {
+            "db": {
+              "type": "string",
+              "maxLength": 255,
+              "primary": false,
+              "unique": false,
+              "nullable": true
+            }
+          },
+          "empresa": {
+            "db": {
+              "type": "reference",
+              "primary": false,
+              "unique": false,
+              "nullable": true,
+              "references": "id",
+              "inTable": "empresa",
+              "referenceType": "integer",
+              "onUpdate": "SET NULL",
+              "onDelete": "SET NULL"
+            }
+          }
+        },
+        "refs": {
+          "financeiro": "cliente"
+        }
+      },
+      "fornecedores": {
+        "db": {},
+        "columns": {
+          "id": {
+            "db": {
+              "type": "increments",
+              "default": "",
+              "primary": true,
+              "unique": true,
+              "nullable": false
+            }
+          },
+          "nome": {
+            "db": {
+              "type": "string",
+              "maxLength": 255,
+              "primary": false,
+              "unique": false,
+              "nullable": true
+            }
+          },
+          "email": {
+            "db": {
+              "type": "string",
+              "maxLength": 255,
+              "primary": false,
+              "unique": false,
+              "nullable": true
+            }
+          },
+          "whatsapp": {
+            "db": {
+              "type": "string",
+              "maxLength": 255,
+              "primary": false,
+              "unique": false,
+              "nullable": true
+            }
+          },
+          "empresa": {
+            "db": {
+              "type": "reference",
+              "primary": false,
+              "unique": false,
+              "nullable": true,
+              "references": "id",
+              "inTable": "empresa",
+              "referenceType": "integer",
+              "onUpdate": "SET NULL",
+              "onDelete": "SET NULL"
+            }
+          }
+        },
+        "refs": {
+          "financeiro": "fornecedor"
+        }
+      },
+      "financeiro": {
+        "columns": {
+          "id": {
+            "db": {
+              "type": "increments",
+              "default": "",
+              "primary": true,
+              "unique": true,
+              "nullable": false
+            }
+          },
+          "data_criacao": {
+            "db": {
+              "type": "date",
+              "primary": false,
+              "unique": false,
+              "nullable": true
+            }
+          },
+          "cliente": {
+            "db": {
+              "type": "reference",
+              "primary": false,
+              "unique": false,
+              "nullable": true,
+              "references": "id",
+              "inTable": "clientes",
+              "referenceType": "integer",
+              "onUpdate": "SET NULL",
+              "onDelete": "SET NULL"
+            }
+          },
+          "fornecedor": {
+            "db": {
+              "type": "reference",
+              "primary": false,
+              "unique": false,
+              "nullable": true,
+              "references": "id",
+              "inTable": "fornecedores",
+              "referenceType": "integer",
+              "onUpdate": "SET NULL",
+              "onDelete": "SET NULL"
+            }
+          },
+          "data_vencimento": {
+            "db": {
+              "type": "date",
+              "primary": false,
+              "unique": false,
+              "nullable": true
+            }
+          },
+          "valor": {
+            "db": {
+              "type": "integer",
+              "primary": false,
+              "unique": false,
+              "nullable": true
+            }
+          },
+          "tipo": {
+            "db": {
+              "type": "string",
+              "maxLength": 255,
+              "primary": false,
+              "unique": false,
+              "nullable": true
+            }
+          },
+          "empresa": {
+            "db": {
+              "type": "reference",
+              "primary": false,
+              "unique": false,
+              "nullable": true,
+              "references": "id",
+              "inTable": "empresa",
+              "referenceType": "integer",
+              "onUpdate": "SET NULL",
+              "onDelete": "SET NULL"
+            }
+          }
+        },
+        "db": {}
+      },
+      "balancete": {
+        "db": {},
+        "columns": {
+          "id": {
+            "db": {
+              "type": "increments",
+              "default": "",
+              "primary": true,
+              "unique": true,
+              "nullable": false
+            }
+          },
+          "created_at": {
+            "db": {
+              "type": "timestamp",
+              "default": "now()",
+              "useTz": true,
+              "primary": false,
+              "unique": false,
+              "nullable": false
+            }
+          },
+          "cnpj": {
+            "db": {
+              "type": "string",
+              "maxLength": -5,
+              "primary": false,
+              "unique": false,
+              "nullable": true
+            }
+          },
+          "company_name": {
+            "db": {
+              "type": "text",
+              "primary": false,
+              "unique": false,
+              "nullable": true
+            }
+          },
+          "report_type": {
+            "db": {
+              "type": "text",
+              "primary": false,
+              "unique": false,
+              "nullable": true
+            }
+          },
+          "period_start": {
+            "db": {
+              "type": "text",
+              "primary": false,
+              "unique": false,
+              "nullable": true
+            }
+          },
+          "period_end": {
+            "db": {
+              "type": "text",
+              "primary": false,
+              "unique": false,
+              "nullable": true
+            }
+          },
+          "conta": {
+            "db": {
+              "type": "text",
+              "primary": false,
+              "unique": false,
+              "nullable": true
+            }
+          },
+          "classificacao": {
+            "db": {
+              "type": "text",
+              "primary": false,
+              "unique": false,
+              "nullable": true
+            }
+          },
+          "saldo_ant": {
+            "db": {
+              "type": "float",
+              "primary": false,
+              "unique": false,
+              "nullable": true
+            }
+          },
+          "debito": {
+            "db": {
+              "type": "float",
+              "primary": false,
+              "unique": false,
+              "nullable": true
+            }
+          },
+          "credito": {
+            "db": {
+              "type": "float",
+              "primary": false,
+              "unique": false,
+              "nullable": true
+            }
+          },
+          "saldo": {
+            "db": {
+              "type": "float",
+              "primary": false,
+              "unique": false,
+              "nullable": true
+            }
+          },
+          "ContaSumario": {
+            "db": {
+              "type": "text",
+              "primary": false,
+              "unique": false,
+              "nullable": true
+            }
+          }
+        }
+      },
+      "users": {
+        "db": {},
+        "columns": {
+          "id": {
+            "db": {
+              "type": "increments",
+              "default": "",
+              "primary": true,
+              "unique": true,
+              "nullable": false
+            }
+          },
+          "nome": {
+            "db": {
+              "type": "string",
+              "default": "",
+              "maxLength": 50,
+              "primary": false,
+              "unique": false,
+              "nullable": true
+            }
+          },
+          "email": {
+            "db": {
+              "type": "string",
+              "default": "",
+              "maxLength": 60,
+              "primary": false,
+              "unique": false,
+              "nullable": true
+            }
+          },
+          "avatar": {
+            "db": {
+              "type": "string",
+              "default": "",
+              "maxLength": 25,
+              "primary": false,
+              "unique": false,
+              "nullable": true
+            }
+          },
+          "senha": {
+            "db": {
+              "type": "string",
+              "maxLength": 255,
+              "primary": false,
+              "unique": false,
+              "nullable": true
+            }
+          },
+          "empresa": {
+            "db": {
+              "type": "reference",
+              "primary": false,
+              "unique": false,
+              "nullable": true,
+              "references": "id",
+              "inTable": "empresa",
+              "referenceType": "integer",
+              "onUpdate": "SET NULL",
+              "onDelete": "SET NULL"
+            }
+          },
+          "funcao": {
+            "db": {
+              "type": "string",
+              "maxLength": 255,
+              "primary": false,
+              "unique": false,
+              "nullable": true
+            }
+          }
+        }
+      }
+    },
+    "views": {}
+  }
+}

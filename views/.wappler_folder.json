@@ -1,0 +1,34 @@
+{
+  "cadastro.ejs": {
+    "layoutPage": "main",
+    "description": ""
+  },
+  "login.ejs": {
+    "layoutPage": "main",
+    "description": ""
+  },
+  "analytics.ejs": {
+    "layoutPage": "dashboard",
+    "description": ""
+  },
+  "analitics.ejs": {
+    "layoutPage": "dashboard",
+    "description": ""
+  },
+  "clientes.ejs": {
+    "layoutPage": "dashboard",
+    "description": ""
+  },
+  "modelo.ejs": {
+    "layoutPage": "modelo",
+    "description": ""
+  },
+  "fornecedores.ejs": {
+    "layoutPage": "dashboard",
+    "description": ""
+  },
+  "conciliacao_fornecedores.ejs": {
+    "layoutPage": "dashboard",
+    "description": ""
+  }
+}

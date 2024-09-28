@@ -1,0 +1,151 @@
+<!-- Wappler include head-page="layouts/dashboard" fontawesome_5="cdn" bootstrap5="custom" is="dmx-app" id="clientes" appConnect="local" components="{dmxBootstrap5Modal:{},dmxValidator:{},dmxDataTraversal:{},dmxBootstrap5PagingGenerator:{}}" -->
+<div class="modal fade" id="modal_editar_cliente" is="dmx-bs5-modal" tabindex="-1">
+    <div class="modal-dialog modal-sm" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">Atualizar Cliente</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <form is="dmx-serverconnect-form" id="sc_editar_cliente" method="post" action="/api/clientes/atualizar_clientes" dmx-generator="bootstrap5" dmx-form-type="horizontal">
+                    <div class="form-group mb-3 row">
+                        <div class="col-sm-10">
+                            <input type="text" class="form-control" id="inp_id" name="id" aria-describedby="inp_id_help" placeholder="Enter Id" dmx-bind:value="data_detail1.data.id">
+                        </div>
+                    </div>
+                    <div class="form-group mb-3 row">
+                        <label for="inp_nome" class="col-sm-2 col-form-label">Nome</label>
+                        <div class="col-sm-10">
+                            <input type="text" class="form-control" id="inp_nome" name="nome" aria-describedby="inp_nome_help" placeholder="Enter Nome" dmx-bind:value="data_detail1.data.nome">
+                        </div>
+                    </div>
+                    <div class="form-group mb-3 row">
+                        <label for="inp_email" class="col-sm-2 col-form-label">Email</label>
+                        <div class="col-sm-10">
+                            <input type="text" class="form-control" id="inp_email" name="email" aria-describedby="inp_email_help" placeholder="Enter Email" dmx-bind:value="data_detail1.data.email">
+                        </div>
+                    </div>
+                    <div class="form-group mb-3 row">
+                        <label for="inp_whatsapp" class="col-sm-2 col-form-label">Whatsapp</label>
+                        <div class="col-sm-10">
+                            <input type="text" class="form-control" id="inp_whatsapp" name="whatsapp" aria-describedby="inp_whatsapp_help" placeholder="Enter Whatsapp" dmx-bind:value="data_detail1.data.whatsapp">
+                        </div>
+                    </div>
+                    <div class="form-group mb-3 row">
+                        <div class="col-sm-10">
+                            <button type="submit" class="btn btn-primary" dmx-bind:disabled="state.executing">Atualizar Cliente <span class="spinner-border spinner-border-sm" role="status" dmx-show="state.executing"></span></button>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+<dmx-data-detail id="data_detail1" dmx-bind:data="sc_listar_clientes.data.query_clienstes.data" key="id"></dmx-data-detail>
+<dmx-serverconnect id="sc_listar_clientes" url="/api/clientes/listar_clientes" dmx-param:limit="30"></dmx-serverconnect>
+<div class="modal fade" id="modal_novo_cliente" is="dmx-bs5-modal" tabindex="-1">
+    <div class="modal-dialog modal-sm" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">Novo Cliente</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <form is="dmx-serverconnect-form" id="sc_novo_cliente" method="post" action="/api/clientes/novo_cliente" dmx-generator="bootstrap5" dmx-form-type="vertical" dmx-on:success="sc_novo_cliente.reset();modal_novo_cliente.hide();notifies.success('Cliente Cadastrado com sucesso');sc_listar_clientes.load({})">
+                    <div class="form-group mb-3">
+                        <label for="inp_nome">Nome</label>
+                        <input type="text" class="form-control" id="inp_nome" name="nome" aria-describedby="inp_nome_help" placeholder="Enter Nome" required="" data-msg-required="Campo obrigatorio">
+                    </div>
+                    <div class="form-group mb-3">
+                        <label for="inp_email">Email</label>
+                        <input type="text" class="form-control" id="inp_email" name="email" aria-describedby="inp_email_help" placeholder="Enter Email" required="" data-msg-required="Campo obrigatorio">
+                    </div>
+                    <div class="form-group mb-3">
+                        <label for="inp_whatsapp">Whatsapp</label>
+                        <input type="text" class="form-control" id="inp_whatsapp" name="whatsapp" aria-describedby="inp_whatsapp_help" placeholder="Enter Whatsapp" required="" data-msg-required="Campo obrigatorio">
+                    </div>
+                    <div class="form-group mb-3 text-end">
+                        <button type="submit" class="btn btn-primary" dmx-bind:disabled="state.executing">Adicionar Cliente <span class="spinner-border spinner-border-sm" role="status" dmx-show="state.executing"></span></button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+<meta name="ac:route" content="/clientes">
+<div class="content-wrapper">
+    <!-- Content -->
+
+    <div class="container-xxl flex-grow-1 container-p-y">
+        <h4 class="py-3 mb-4"><span class="text-muted fw-light">Dashboard /</span> Clientes</h4>
+
+        <!-- Basic Bootstrap Table -->
+        <div class="card">
+            <div class="card-header">
+                <div class="d-flex justify-content-between">
+
+                    <h5 class="card-header">Clientes</h5><button id="btn1" class="btn btn-primary align-self-center" dmx-on:click="modal_novo_cliente.show()">Adicionar Cliente&nbsp;&nbsp;<i class="fas fa-plus-circle"></i></button>
+                </div>
+            </div>
+
+            <div class="table-responsive text-nowrap">
+                <table class="table">
+                    <thead>
+                        <tr>
+                            <th>Nome</th>
+                            <th>EMAIL</th>
+                            <th>whatsapp</th>
+                            <th>Ações</th>
+                        </tr>
+                    </thead>
+                    <tbody class="table-border-bottom-0" is="dmx-repeat" id="repeat1" dmx-bind:repeat="sc_listar_clientes.data.query_clienstes.data" key="id">
+                        <tr>
+                            <td><span class="fw-medium">{{nome}}</span></td>
+                            <td class="text-center">{{email}}</td>
+                            <td class="text-center">{{whatsapp}}</td>
+                            <td>
+                                <div class="dropdown">
+                                    <button type="button" class="btn p-0 dropdown-toggle hide-arrow" data-bs-toggle="dropdown">
+                                        <i class="ti ti-dots-vertical"></i>
+                                    </button>
+                                    <div class="dropdown-menu">
+                                        <a class="dropdown-item" href="#" dmx-on:click=""><i class="ti ti-pencil me-1"></i>Editar</a>
+                                        <a class="dropdown-item" href="javascript:void(0);"><i class="ti ti-trash me-1"></i> Delete</a>
+                                    </div>
+                                </div>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+            <div class="card-footer">
+                <ul class="pagination pagination-sm" dmx-populate="sc_listar_clientes.data.query_clienstes" dmx-generator="bs5paging">
+                    <li class="page-item" dmx-class:disabled="sc_listar_clientes.data.query_clienstes.page.current == 1" aria-label="First">
+                        <a href="javascript:void(0)" class="page-link" dmx-on:click="sc_listar_clientes.load({offset: sc_listar_clientes.data.query_clienstes.page.offset.first})"><span aria-hidden="true">&lsaquo;&lsaquo;</span></a>
+                    </li>
+                    <li class="page-item" dmx-class:disabled="sc_listar_clientes.data.query_clienstes.page.current == 1" aria-label="Previous">
+                        <a href="javascript:void(0)" class="page-link" dmx-on:click="sc_listar_clientes.load({offset: sc_listar_clientes.data.query_clienstes.page.offset.prev})"><span aria-hidden="true">&lsaquo;</span></a>
+                    </li>
+                    <li class="page-item" dmx-class:active="title == sc_listar_clientes.data.query_clienstes.page.current" dmx-class:disabled="!active" dmx-repeat="sc_listar_clientes.data.query_clienstes.getServerConnectPagination(2,1,'...')">
+                        <a href="javascript:void(0)" class="page-link" dmx-on:click="sc_listar_clientes.load({offset: (page-1)*sc_listar_clientes.data.query_clienstes.limit})">{{title}}</a>
+                    </li>
+                    <li class="page-item" dmx-class:disabled="sc_listar_clientes.data.query_clienstes.page.current ==  sc_listar_clientes.data.query_clienstes.page.total" aria-label="Next">
+                        <a href="javascript:void(0)" class="page-link" dmx-on:click="sc_listar_clientes.load({offset: sc_listar_clientes.data.query_clienstes.page.offset.next})"><span aria-hidden="true">&rsaquo;</span></a>
+                    </li>
+                    <li class="page-item" dmx-class:disabled="sc_listar_clientes.data.query_clienstes.page.current ==  sc_listar_clientes.data.query_clienstes.page.total" aria-label="Last">
+                        <a href="javascript:void(0)" class="page-link" dmx-on:click="sc_listar_clientes.load({offset: sc_listar_clientes.data.query_clienstes.page.offset.last})"><span aria-hidden="true">&rsaquo;&rsaquo;</span></a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+
+
+
+    </div>
+    <!-- / Content -->
+
+    <!-- Footer -->
+    <!-- / Footer -->
+
+    <div class="content-backdrop fade"></div>
+</div>

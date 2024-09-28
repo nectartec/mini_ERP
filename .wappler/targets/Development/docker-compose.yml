@@ -1,0 +1,59 @@
+services:
+  web:
+    restart: 'always'
+    stdin_open: true
+    tty: true
+    build:
+      context: '../../../'
+      dockerfile: '.wappler/targets/Development/web/Dockerfile'
+    logging:
+      options:
+        max-file: '5'
+        max-size: '10m'
+    depends_on:
+      - 'db'
+    labels:
+      - 'traefik.enable=true'
+      - 'traefik.http.routers.mini_erp__development_web.entrypoints=web'
+      - 'traefik.http.routers.mini_erp__development_web.rule=Host(`portal.revizzor.online`)'
+      - 'traefik.http.routers.mini_erp__development_web-secure.entrypoints=websecure'
+      - 'traefik.http.routers.mini_erp__development_web-secure.rule=Host(`portal.revizzor.online`)'
+      - 'traefik.http.routers.mini_erp__development_web-secure.tls=true'
+      - 'traefik.http.routers.mini_erp__development_web-secure.tls.certresolver=leresolver'
+      - 'traefik.http.services.mini_erp__development_web.loadbalancer.server.port=3000'
+      - 'traefik.docker.network=wappler-compose_proxy'
+      - 'traefik.http.routers.mini_erp__development_www_web-secure.entrypoints=websecure'
+      - 'traefik.http.routers.mini_erp__development_www_web-secure.rule=Host(`www.portal.revizzor.online`)'
+      - 'traefik.http.routers.mini_erp__development_www_web-secure.tls=true'
+      - 'traefik.http.routers.mini_erp__development_www_web-secure.tls.certresolver=leresolver'
+      - 'traefik.http.middlewares.mini_erp__development_www-redirect.redirectregex.regex=^https://www.portal.revizzor.online/(.*)'
+      - 'traefik.http.middlewares.mini_erp__development_www-redirect.redirectregex.replacement=https://portal.revizzor.online/$${1}'
+      - 'traefik.http.middlewares.mini_erp__development_www-redirect.redirectregex.permanent=true'
+      - 'traefik.http.routers.mini_erp__development_www_web-secure.middlewares=mini_erp__development_www-redirect'
+    networks:
+      proxy: ~
+  db:
+    environment:
+      POSTGRES_PASSWORD: 'syrcDSqw'
+      POSTGRES_USER: 'db_user'
+      POSTGRES_DB: 'mini_erp'
+    volumes:
+      - 'db-volume:/var/lib/postgresql/data'
+    ports:
+      - '9906:5432'
+    restart: 'always'
+    logging:
+      options:
+        max-file: '5'
+        max-size: '10m'
+    build:
+      context: '.'
+      dockerfile: 'db/Dockerfile'
+    networks:
+      proxy: ~
+volumes:
+  db-volume: ~
+networks:
+  proxy:
+    name: 'wappler-compose_proxy'
+    external: true

@@ -1,0 +1,43 @@
+{
+  "meta": {
+    "$_POST": [
+      {
+        "type": "text",
+        "name": "email"
+      },
+      {
+        "type": "text",
+        "name": "senha"
+      },
+      {
+        "type": "text",
+        "name": "Lembrar-me"
+      }
+    ]
+  },
+  "exec": {
+    "steps": [
+      {
+        "name": "identity",
+        "module": "auth",
+        "action": "login",
+        "options": {
+          "username": "{{$_POST.email}}",
+          "password": "{{$_POST.senha.sha1()}}",
+          "remember": "{{$_POST['Lembrar-me']}}",
+          "provider": "auth"
+        },
+        "output": true,
+        "meta": []
+      },
+      {
+        "name": "",
+        "module": "core",
+        "action": "redirect",
+        "options": {
+          "url": "/analytics"
+        }
+      }
+    ]
+  }
+}

@@ -1,0 +1,109 @@
+{
+  "meta": {
+    "$_POST": [
+      {
+        "type": "text",
+        "name": "id"
+      },
+      {
+        "type": "text",
+        "name": "nome"
+      },
+      {
+        "type": "text",
+        "name": "email"
+      },
+      {
+        "type": "text",
+        "name": "whatsapp"
+      }
+    ]
+  },
+  "exec": {
+    "steps": {
+      "name": "update_clientes",
+      "module": "dbupdater",
+      "action": "update",
+      "options": {
+        "connection": "db",
+        "sql": {
+          "type": "update",
+          "values": [
+            {
+              "table": "clientes",
+              "column": "nome",
+              "type": "text",
+              "value": "{{$_POST.nome}}"
+            },
+            {
+              "table": "clientes",
+              "column": "email",
+              "type": "text",
+              "value": "{{$_POST.email}}"
+            },
+            {
+              "table": "clientes",
+              "column": "whatsapp",
+              "type": "text",
+              "value": "{{$_POST.whatsapp}}"
+            }
+          ],
+          "table": "clientes",
+          "wheres": {
+            "condition": "AND",
+            "rules": [
+              {
+                "id": "id",
+                "field": "id",
+                "type": "double",
+                "operator": "equal",
+                "value": "{{$_POST.id}}",
+                "data": {
+                  "column": "id"
+                },
+                "operation": "="
+              }
+            ],
+            "conditional": null,
+            "valid": true
+          },
+          "returning": "id",
+          "query": "update \"clientes\" set \"nome\" = ?, \"email\" = ?, \"whatsapp\" = ? where \"id\" = ?",
+          "params": [
+            {
+              "name": ":P1",
+              "type": "expression",
+              "value": "{{$_POST.nome}}",
+              "test": ""
+            },
+            {
+              "name": ":P2",
+              "type": "expression",
+              "value": "{{$_POST.email}}",
+              "test": ""
+            },
+            {
+              "name": ":P3",
+              "type": "expression",
+              "value": "{{$_POST.whatsapp}}",
+              "test": ""
+            },
+            {
+              "operator": "equal",
+              "type": "expression",
+              "name": ":P4",
+              "value": "{{$_POST.id}}",
+              "test": ""
+            }
+          ]
+        }
+      },
+      "meta": [
+        {
+          "name": "affected",
+          "type": "number"
+        }
+      ]
+    }
+  }
+}

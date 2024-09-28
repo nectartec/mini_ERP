@@ -1,0 +1,125 @@
+{
+  "projectName": "MINI ERP",
+  "styleFile": "/css/style.css",
+  "assetsFolder": "/assets",
+  "designFramework": "bootstrap5",
+  "frameworks": [
+    {
+      "name": "fontawesome_5",
+      "type": "cdn"
+    },
+    {
+      "name": "bootstrap5",
+      "type": "custom",
+      "options": {
+        "jsIncludePath": "/bootstrap/5/js/bootstrap.min.js",
+        "cssIncludePath": "/bootstrap/5/css/bootstrap.min.css"
+      }
+    },
+    {
+      "name": "appConnect",
+      "type": "local"
+    }
+  ],
+  "hostingType": "docker",
+  "projectServerModel": "node",
+  "runtime": "capacitor",
+  "webRootFolder": "/public",
+  "useRouting": true,
+  "addBase": true,
+  "routingHandler": "node",
+  "projectLinksType": "site",
+  "targets": [
+    {
+      "name": "Development",
+      "remoteURL": "https://portal.revizzor.online",
+      "webServerLang": "node",
+      "targetType": "docker",
+      "webServer": "node",
+      "NodeVersion": "lts",
+      "NodeOS": "alpine",
+      "webLoggingMaxFiles": "5",
+      "webLoggingMaxFileSize": "10m",
+      "databaseLoggingMaxFiles": "5",
+      "databaseLoggingMaxFileSize": "10m",
+      "dockerTimezone": "America/Sao_Paulo",
+      "databaseType": "postgres",
+      "postgresVersion": "14.8.x",
+      "databasePort": 9906,
+      "postgres_rootName": "db_user",
+      "postgres_rootPassword": "syrcDSqw",
+      "postgres_databaseName": "mini_erp",
+      "dockerType": "remote",
+      "dockerProtocol": "ssh",
+      "dockerHost": "188.245.125.220",
+      "dockerServerName": "hetzner / revizzorminierp",
+      "dockerProjectName": "mini_erp__development",
+      "NodeImageType": "slim"
+    }
+  ],
+  "activeTarget": "Development",
+  "projectType": "web",
+  "extensions": [],
+  "resources": {
+    "providers": {
+      "hetzner": {
+        "provider-api-key": "y4PSvBQ5JAE3eeSvHKRyo0QVx8Eow7g4sXP2GTxrc8gIESwqZVZv2KtwK6azrRdF",
+        "ssh-key-id": 23196148,
+        "ssh-key-file": "/.wappler/.ssh/mini_erp.pub",
+        "ssh_key": {
+          "revizzor2": {
+            "id": 23195801,
+            "ssh-key-file": "~/.ssh/revizzor2.pub",
+            "fingerprint": "6b:7a:ca:81:b4:2a:04:7a:98:eb:0f:98:59:3d:bc:4e",
+            "type": "ed25519"
+          },
+          "mini_erp": {
+            "id": 23196148,
+            "ssh-key-file": "/.wappler/.ssh/mini_erp.pub",
+            "fingerprint": "26:e3:e7:1d:38:1f:4a:e1:36:ab:5c:1e:06:37:e1:3a",
+            "type": "ed25519",
+            "name": "mini_erp"
+          }
+        },
+        "server": {
+          "revizzor": {
+            "id": 53466751,
+            "status": "running",
+            "access": false,
+            "ip_address": "188.245.125.220",
+            "location": "Falkenstein DC Park 1",
+            "price": 6.3,
+            "cpu": "Intel",
+            "cores": 4,
+            "cpu_type": "shared",
+            "memory": 8,
+            "disk": 80
+          },
+          "revizzorminierp": {
+            "id": 53467260,
+            "status": "running",
+            "access": true,
+            "ip_address": "188.245.125.220",
+            "location": "Falkenstein DC Park 1",
+            "price": 6.3,
+            "cpu": "Intel",
+            "cores": 4,
+            "cpu_type": "shared",
+            "memory": 8,
+            "disk": 80,
+            "ssh_keys": [
+              {
+                "id": 23196148,
+                "ssh-key-file": "/.wappler/.ssh/mini_erp.pub",
+                "fingerprint": "26:e3:e7:1d:38:1f:4a:e1:36:ab:5c:1e:06:37:e1:3a",
+                "type": "ed25519",
+                "name": "mini_erp"
+              }
+            ],
+            "services": {}
+          }
+        }
+      }
+    }
+  }
+}

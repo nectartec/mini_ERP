@@ -1,0 +1,244 @@
+{
+  "meta": {
+    "$_GET": [
+      {
+        "type": "text",
+        "name": "offset"
+      },
+      {
+        "type": "text",
+        "name": "limit"
+      },
+      {
+        "type": "text",
+        "name": "sort"
+      },
+      {
+        "type": "text",
+        "name": "dir"
+      }
+    ]
+  },
+  "exec": {
+    "steps": [
+      {
+        "name": "identity_clientes",
+        "module": "auth",
+        "action": "identify",
+        "options": {
+          "provider": "auth"
+        },
+        "meta": []
+      },
+      {
+        "name": "query_empresa",
+        "module": "dbconnector",
+        "action": "single",
+        "options": {
+          "connection": "db",
+          "sql": {
+            "type": "select",
+            "columns": [
+              {
+                "table": "users",
+                "column": "empresa"
+              }
+            ],
+            "params": [
+              {
+                "operator": "equal",
+                "type": "expression",
+                "name": ":P1",
+                "value": "{{identity_clientes}}",
+                "test": ""
+              }
+            ],
+            "table": {
+              "name": "users"
+            },
+            "primary": "id",
+            "joins": [],
+            "wheres": {
+              "condition": "AND",
+              "rules": [
+                {
+                  "id": "users.id",
+                  "field": "users.id",
+                  "type": "double",
+                  "operator": "equal",
+                  "value": "{{identity_clientes}}",
+                  "data": {
+                    "table": "users",
+                    "column": "id",
+                    "type": "number",
+                    "columnObj": {
+                      "type": "increments",
+                      "default": "",
+                      "primary": true,
+                      "unique": true,
+                      "nullable": false,
+                      "name": "id"
+                    }
+                  },
+                  "operation": "="
+                }
+              ],
+              "conditional": null,
+              "valid": true
+            },
+            "query": "select \"empresa\" from \"users\" where \"users\".\"id\" = ?"
+          }
+        },
+        "meta": [
+          {
+            "type": "number",
+            "name": "empresa"
+          }
+        ],
+        "outputType": "object"
+      },
+      {
+        "name": "query_clienstes",
+        "module": "dbconnector",
+        "action": "paged",
+        "options": {
+          "connection": "db",
+          "sql": {
+            "type": "select",
+            "columns": [
+              {
+                "table": "clientes",
+                "column": "*"
+              }
+            ],
+            "params": [
+              {
+                "operator": "equal",
+                "type": "expression",
+                "name": ":P1",
+                "value": "{{query_empresa.empresa}}",
+                "test": ""
+              }
+            ],
+            "table": {
+              "name": "clientes"
+            },
+            "primary": "id",
+            "joins": [],
+            "wheres": {
+              "condition": "AND",
+              "rules": [
+                {
+                  "id": "clientes.empresa",
+                  "field": "clientes.empresa",
+                  "type": "double",
+                  "operator": "equal",
+                  "value": "{{query_empresa.empresa}}",
+                  "data": {
+                    "table": "clientes",
+                    "column": "empresa",
+                    "type": "number",
+                    "columnObj": {
+                      "type": "reference",
+                      "primary": false,
+                      "unique": false,
+                      "nullable": true,
+                      "references": "id",
+                      "inTable": "empresa",
+                      "referenceType": "integer",
+                      "onUpdate": "SET NULL",
+                      "onDelete": "SET NULL",
+                      "name": "empresa"
+                    }
+                  },
+                  "operation": "="
+                }
+              ],
+              "conditional": null,
+              "valid": true
+            },
+            "query": "select * from \"clientes\" where \"clientes\".\"empresa\" = ?"
+          }
+        },
+        "meta": [
+          {
+            "name": "offset",
+            "type": "number"
+          },
+          {
+            "name": "limit",
+            "type": "number"
+          },
+          {
+            "name": "total",
+            "type": "number"
+          },
+          {
+            "name": "page",
+            "type": "object",
+            "sub": [
+              {
+                "name": "offset",
+                "type": "object",
+                "sub": [
+                  {
+                    "name": "first",
+                    "type": "number"
+                  },
+                  {
+                    "name": "prev",
+                    "type": "number"
+                  },
+                  {
+                    "name": "next",
+                    "type": "number"
+                  },
+                  {
+                    "name": "last",
+                    "type": "number"
+                  }
+                ]
+              },
+              {
+                "name": "current",
+                "type": "number"
+              },
+              {
+                "name": "total",
+                "type": "number"
+              }
+            ]
+          },
+          {
+            "name": "data",
+            "type": "array",
+            "sub": [
+              {
+                "type": "number",
+                "name": "id"
+              },
+              {
+                "type": "text",
+                "name": "nome"
+              },
+              {
+                "type": "text",
+                "name": "email"
+              },
+              {
+                "type": "text",
+                "name": "whatsapp"
+              },
+              {
+                "type": "number",
+                "name": "empresa"
+              }
+            ]
+          }
+        ],
+        "outputType": "object",
+        "output": true
+      }
+    ]
+  }
+}

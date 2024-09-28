@@ -1,0 +1,44 @@
+{
+  "routes": [
+    {
+      "path": "/logout",
+      "exec": "/api/usuarios/logout"
+    },
+    {
+      "path": "/",
+      "page": "index",
+      "routeType": "page",
+      "layout": "main"
+    },
+    {
+      "path": "/cadastro",
+      "page": "cadastro",
+      "layout": "main"
+    },
+    {
+      "path": "/login",
+      "page": "login",
+      "layout": "main"
+    },
+    {
+      "path": "/analytics",
+      "page": "analytics",
+      "layout": "dashboard"
+    },
+    {
+      "path": "/clientes",
+      "page": "clientes",
+      "layout": "dashboard"
+    },
+    {
+      "path": "/fornecedores",
+      "page": "fornecedores",
+      "layout": "dashboard"
+    },
+    {
+      "path": "/conciliacao_fornecedores",
+      "page": "conciliacao_fornecedores",
+      "layout": "dashboard"
+    }
+  ]
+}

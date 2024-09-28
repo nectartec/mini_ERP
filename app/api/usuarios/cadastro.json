@@ -1,0 +1,147 @@
+{
+  "meta": {
+    "$_POST": [
+      {
+        "type": "text",
+        "name": "nome"
+      },
+      {
+        "type": "text",
+        "name": "empresa"
+      },
+      {
+        "type": "text",
+        "name": "senha"
+      },
+      {
+        "type": "text",
+        "name": "email"
+      },
+      {
+        "type": "text",
+        "name": "avatar"
+      }
+    ]
+  },
+  "exec": {
+    "steps": [
+      {
+        "name": "insert_empresa",
+        "module": "dbupdater",
+        "action": "insert",
+        "options": {
+          "connection": "db",
+          "sql": {
+            "type": "insert",
+            "values": [
+              {
+                "table": "empresa",
+                "column": "empresa",
+                "type": "text",
+                "value": "{{$_POST.empresa}}",
+                "recid": 1
+              }
+            ],
+            "table": "empresa",
+            "returning": "id",
+            "query": "insert into \"empresa\" (\"empresa\") values (?) returning \"id\"",
+            "params": [
+              {
+                "name": ":P1",
+                "type": "expression",
+                "value": "{{$_POST.empresa}}",
+                "test": ""
+              }
+            ]
+          }
+        },
+        "meta": [
+          {
+            "name": "identity",
+            "type": "text"
+          },
+          {
+            "name": "affected",
+            "type": "number"
+          }
+        ]
+      },
+      {
+        "name": "insert",
+        "module": "dbupdater",
+        "action": "insert",
+        "options": {
+          "connection": "db",
+          "sql": {
+            "type": "insert",
+            "values": [
+              {
+                "table": "users",
+                "column": "email",
+                "type": "text",
+                "value": "{{$_POST.email}}"
+              },
+              {
+                "table": "users",
+                "column": "empresa",
+                "type": "number",
+                "value": "{{insert_empresa.identity}}"
+              },
+              {
+                "table": "users",
+                "column": "nome",
+                "type": "text",
+                "value": "{{$_POST.nome}}"
+              },
+              {
+                "table": "users",
+                "column": "senha",
+                "type": "text",
+                "value": "{{$_POST.senha.sha1()}}"
+              }
+            ],
+            "table": "users",
+            "returning": "id",
+            "query": "insert into \"users\" (\"email\", \"empresa\", \"nome\", \"senha\") values (?, ?, ?, ?)",
+            "params": [
+              {
+                "name": ":P1",
+                "type": "expression",
+                "value": "{{$_POST.email}}",
+                "test": ""
+              },
+              {
+                "name": ":P2",
+                "type": "expression",
+                "value": "{{insert_empresa.identity}}",
+                "test": ""
+              },
+              {
+                "name": ":P3",
+                "type": "expression",
+                "value": "{{$_POST.nome}}",
+                "test": ""
+              },
+              {
+                "name": ":P4",
+                "type": "expression",
+                "value": "{{$_POST.senha.sha1()}}",
+                "test": ""
+              }
+            ]
+          }
+        },
+        "meta": [
+          {
+            "name": "identity",
+            "type": "text"
+          },
+          {
+            "name": "affected",
+            "type": "number"
+          }
+        ]
+      }
+    ]
+  }
+}
